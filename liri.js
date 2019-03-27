@@ -1,15 +1,17 @@
-// require("dotenv").config();
-// var keys = require("./keys.js");
-
-// var spotify = new Spotify(keys.spotify);
-// function spotify(){
-
-// }
+require("dotenv").config();
+var keys = require("./keys.js");
+var Spotify = require('node-spotify-api');
+var spotify = new Spotify(keys.spotify);
 
 var axios = require("axios")
+var moment = require("moment");
 var action = process.argv[2];
 
 switch (action){
+    case "spotify-this-song":
+    spotify();
+    break;
+
     case "movie-this":
     movie();
     break;
@@ -22,7 +24,25 @@ switch (action){
     doWhat();
     break;
 }
+function spotify(){
+  
+var songSearch = process.argv[3];
 
+var songName = "";
+for (var i = 0; i < songSearch.length; i++) {
+    if (i > 30 && i < songSearch.length) {
+     songName = songName + "+" + songSearch[i];
+       } else {
+     artistName += artistSearch[i];
+   }
+}
+spotify.request('https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx').then(function(data){
+    console.log(data);
+}).catch(function(err){
+    console.log("error occurred: "+ err);
+        }
+    );
+}
 // BAND IN TOWN FUNCTION
 function music(){
 var artistSearch = process.argv[3];
@@ -40,7 +60,7 @@ for (var i = 0; i < artistSearch.length; i++) {
         axios.get(queryUrl).then(function(response){
             console.log("Name of Venue: "+ response.data[0].venue.name);
             console.log("City: "+ response.data[0].venue.city);
-            console.log("Date of the Event: "+ response.data[0].datetime);
+            console.log("Date of the Event: "+ moment(response.data[0].datetime).format("MM DD YYYY"));
         }
 );
 }
