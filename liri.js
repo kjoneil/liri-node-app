@@ -36,7 +36,7 @@ for (var i = 0; i < artistSearch.length; i++) {
    }
 }
     var queryUrl = "https://rest.bandsintown.com/artists/" + artistName + "/events?app_id=codingbootcamp";
-    console.log(queryUrl);
+    // console.log(queryUrl);
         axios.get(queryUrl).then(function(response){
             console.log("Name of Venue: "+ response.data[0].venue.name);
             console.log("City: "+ response.data[0].venue.city);
@@ -58,7 +58,7 @@ for (var i = 0; i < movieSearch.length; i++) {
    }
 }
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-        console.log(queryUrl);
+        // console.log(queryUrl);
     
         axios.get(queryUrl).then(function(response){
             console.log("Movie: "+response.data.Title);
