@@ -1,3 +1,5 @@
+// All of the packages that are needed to run this app are here
+
 require("dotenv").config();
 var keys = require("./keys.js");
 var Spotify = require('node-spotify-api');
@@ -7,7 +9,7 @@ var moment = require("moment");
 var action = process.argv[2];
 
 switch (action){
-    case "spotify-this-song":
+    case "spotify-this":
     spotify();
     break;
 
