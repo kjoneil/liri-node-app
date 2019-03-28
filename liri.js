@@ -1,10 +1,9 @@
 require("dotenv").config();
 var keys = require("./keys.js");
 var Spotify = require('node-spotify-api');
-var spotify = new Spotify(keys.spotify);
-
 var axios = require("axios")
 var moment = require("moment");
+
 var action = process.argv[2];
 
 switch (action){
@@ -20,7 +19,7 @@ switch (action){
     music();
     break;
 
-    case "do-what":
+    case "liri-do-what":
     doWhat();
     break;
 }
@@ -33,15 +32,19 @@ for (var i = 0; i < songSearch.length; i++) {
     if (i > 30 && i < songSearch.length) {
      songName = songName + "+" + songSearch[i];
        } else {
-     artistName += artistSearch[i];
+     songName += songSearch[i];
    }
 }
-spotify.request('https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx').then(function(data){
-    console.log(data);
-}).catch(function(err){
-    console.log("error occurred: "+ err);
-        }
-    );
+var spotify = new Spotify(keys.spotify);
+spotify.search({ type: 'artist', query: songName, limit: 5 }).then(function(response){
+    console.log(response.artists);    
+})
+.catch(function(err){
+    console.log(err);
+    
+})
+//   console.log("Album: "+data.tracks.items[1].album.name); 
+
 }
 // BAND IN TOWN FUNCTION
 function music(){
@@ -66,6 +69,7 @@ for (var i = 0; i < artistSearch.length; i++) {
 }
 // OMDB FUNCTION
 function movie(){
+ 
 var movieSearch = process.argv[3];
 
 var movieName = "";
@@ -77,6 +81,7 @@ for (var i = 0; i < movieSearch.length; i++) {
      movieName += movieSearch[i];
    }
 }
+
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
         // console.log(queryUrl);
     
@@ -100,7 +105,9 @@ fs.readFile("random.txt", "utf8", function(err, data){
         return console.log(err);
     }
     var output = data.split(",");
-    console.log(output);
+    for(var i=0; i < output.length; i++){
+        console.log(output[i]);
+    }
     
 });
 }
